@@ -48,3 +48,12 @@ async function analyzeStock() {
         document.getElementById('signalOutput').innerText = `❌ Error: ${error.message}`;
     }
 }
+// /api/quote?ticker=AAPL
+app.get('/api/quote', async (req, res) => {
+  const { ticker } = req.query;
+  const apiKey = process.env.ALPHA_VANTAGE_KEY; // Hidden in env
+  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${apiKey}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  res.json(data);
+});
